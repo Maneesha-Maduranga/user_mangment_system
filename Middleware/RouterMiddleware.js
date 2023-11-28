@@ -1,7 +1,7 @@
-const routerNotFound =  (req, res) => {
-    res.send('Route Doesnot Exist');
+const routerNotFound = (req, res) => {
+  res.send("Route Doesnot Exist");
 };
 
 module.exports = {
-    routerNotFound
-}
+  routerNotFound,
+};

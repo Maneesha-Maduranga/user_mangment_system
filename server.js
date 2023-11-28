@@ -9,6 +9,8 @@ const port = process.env.SERVER_PORT || 3000;
 
 //Import Routes
 const authRoutes = require('./Routes/Auth')
+//Import Middleware
+const {routerNotFound} = require('./Middleware/RouterMiddleware')
 
 const app = express()
 
@@ -17,6 +19,10 @@ app.use(cors())
 
 //Use Routes
 app.use('/api/v1/auth/', authRoutes);
+
+
+//Use Middleware
+app.use(routerNotFound)
 
 const startServer = async () => {
     try {
