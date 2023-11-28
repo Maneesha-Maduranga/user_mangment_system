@@ -1,16 +1,33 @@
+//Import Modules
 const express = require('express')
 require('dotenv').config()
+const cors = require('cors')
 
-
-
-const app = express()
+const {connectDB} = require('./Database/ConnectDb')
 
 const port = process.env.SERVER_PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+//Import Routes
+const authRoutes = require('./Routes/Auth')
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const app = express()
+
+app.use(express.json());
+app.use(cors())
+
+//Use Routes
+app.use('/api/v1/auth/', authRoutes);
+
+const startServer = async () => {
+    try {
+      await connectDB();
+      app.listen(port, () => {
+        console.log(`Server IS Running on port ${port}`);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+//Start The Application
+startServer();
