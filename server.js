@@ -2,7 +2,7 @@
 const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
-
+require('express-async-errors');
 const {connectDB} = require('./Database/ConnectDb')
 
 const port = process.env.SERVER_PORT || 3000;
@@ -11,6 +11,7 @@ const port = process.env.SERVER_PORT || 3000;
 const authRoutes = require('./Routes/Auth')
 //Import Middleware
 const {routerNotFound} = require('./Middleware/RouterMiddleware')
+const {errorHandler} = require('./Middleware/ErrorHandler')
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use('/api/v1/auth/', authRoutes);
 
 //Use Middleware
 app.use(routerNotFound)
+app.use(errorHandler)
 
 const startServer = async () => {
     try {
