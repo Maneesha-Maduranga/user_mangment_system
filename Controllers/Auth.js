@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
     res.status(400)
     throw new Error(error.message)
   }
-  //Check email is allready register
+  //Check name is allready register
   let user = await User.findOne({name:name})
 
   if(user){

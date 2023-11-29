@@ -9,7 +9,9 @@ const createToken = ({ payload }) => {
 };
 
 const verifyToken = (token) => {
+  
   let valid = jwt.verify(token, process.env.JWT_SECREAT);
+  
   return valid;
 };
 

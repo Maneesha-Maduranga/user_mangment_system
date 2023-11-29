@@ -2,7 +2,15 @@ const { User, userValidator } = require("../Models/User");
 const { createToken } = require("../Utils/Jwt");
 
 const getAllUser = async (req, res) => {
-  console.log("Get all User");
+  const users = await User.find({}).select('-password');
+  
+  if(!users){
+    res.status(404);
+    throw new Error("Users not found.");
+  }
+  res.status(200).json({
+    data:users
+  })
 };
 
 const createUser = async (req, res) => {
@@ -13,7 +21,7 @@ const createUser = async (req, res) => {
     res.status(400);
     throw new Error(error.message);
   }
-  //Check email is allready register
+  //Check name is allready register
   let user = await User.findOne({ name: name });
 
   if (user) {

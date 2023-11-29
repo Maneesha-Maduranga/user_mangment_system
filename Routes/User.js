@@ -3,8 +3,11 @@ const router = express.Router();
 
 const {getAllUser,createUser} = require('../Controllers/User')
 
+//Import middleware
+const {authentication} = require('../Middleware/Security');
 
-router.get('/getAll', getAllUser )
+
+router.get('/getAll', authentication , getAllUser )
 
 router.post('/create', createUser)
 
