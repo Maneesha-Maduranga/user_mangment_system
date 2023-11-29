@@ -1,4 +1,5 @@
 const {User,userValidator} = require('../Models/User')
+const {createToken} = require('../Utils/Jwt')
 
 const registerUser = async (req, res) => {
   
@@ -22,17 +23,57 @@ const registerUser = async (req, res) => {
     name,
     email,
     password,
-    
   });
 
- res.send(user)
+  let tokenUser = {
+    id:user.id,
+    name:user.name,
+  }
 
+  let token = createToken({payload:tokenUser})
+ 
+  res.status(201).json({
+    sucess:true,
+    data:{
+      token:token,
+      user:tokenUser
+    }
+  })
 
   
 };
 
 const loginUser = async (req, res) => {
-  res.send("Login USer")
+  const { name, password } = req.body;
+
+  let user = await User.findOne({ name:name });
+
+  if (!user) {
+    res.status(404)
+    throw new Error('User Is Not Found With Given Username,Try again with register')
+  }
+
+  let isMatched = await user.validatePassword(password);
+
+  if (!isMatched) {
+    res.status(404)
+    throw new Error('Enterd Password is Incorrect')
+  }
+  
+  let tokenUser = {
+    id:user.id,
+    name:user.name,
+  }
+
+  let token = createToken({payload:tokenUser})
+ 
+  res.status(200).json({
+    sucess:true,
+    data:{
+      token:token,
+      user:tokenUser
+    }
+  })
 };
 
 
