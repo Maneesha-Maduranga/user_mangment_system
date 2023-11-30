@@ -52,7 +52,6 @@ UserSchema.method('validatePassword', async function (password) {
   return isMatched;
 });
 
-//
 
 const User = mongoose.model('User', UserSchema);
 
