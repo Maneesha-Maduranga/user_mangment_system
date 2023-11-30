@@ -1,5 +1,7 @@
 const routerNotFound = (req, res) => {
-  res.send("Route Doesnot Exist");
+  res.status(404).json({
+    message:"Route Doesnot exist"
+  })
 };
 
 module.exports = {
