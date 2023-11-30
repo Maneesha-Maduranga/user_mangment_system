@@ -2,6 +2,9 @@ const { User, userValidator } = require("../Models/User");
 const { createToken } = require("../Utils/Jwt");
 
 const getAllUser = async (req, res) => {
+
+  
+
   const users = await User.find({}).select('-password');
   
   if(!users){
